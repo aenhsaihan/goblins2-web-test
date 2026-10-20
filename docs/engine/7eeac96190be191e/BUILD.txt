@@ -1,0 +1,22 @@
+ScummVM Gob-only WebAssembly CD audio build
+
+License: GNU GPL v3 or later. See COPYING in this directory.
+Complete base source:
+https://github.com/chkuendig/scummvm/tree/de7b4e39851d0111ec7e3f1165fd9c2997ee9419
+All modifications: SOURCE.patch in this directory, applied to that exact commit.
+Do not also apply the separate older low-DPI patch; SOURCE.patch includes it.
+
+Build toolchain: Emscripten SDK 6.0.11, with SDL3, Ogg and Vorbis.
+Load the SDK environment, provide pkg-config for configure, then:
+./configure --host=wasm32-unknown-emscripten --build=wasm32-unknown-emscripten --enable-release --disable-all-engines --enable-engine=gob --disable-cloud --disable-fluidsynth --disable-freetype2 --enable-ogg --enable-vorbis
+make -j8
+
+The shipped JS/WASM are byte-identical to the measured and iPhone-confirmed
+isolated test, not a new recompilation. Trace hooks remain dormant unless a
+caller supplies Module.audioTrace. No trace array is enabled by this player.
+The timer fix is activated by service_timers=1 in the player URL.
+
+SHA-256 scummvm.js:
+41a8319a4999f486b4883e11f3797f7e915aeee0f0f256fb79bfd177583999b7
+SHA-256 scummvm.wasm:
+7eeac96190be191ec3f87f62ec1a1987660fe4862b1cbe93f7e697796f3c8b42

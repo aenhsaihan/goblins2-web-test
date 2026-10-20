@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0e0b09">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Gobliins 2">
+  <meta name="description" content="A separate, touch-friendly Gobliins 2 floppy player. Import your own game files locally; nothing is uploaded.">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./style.css">
+  <title>Gobliins 2 — Floppy test</title>
+</head>
+<body>
+<main>
+  <p class="eyebrow">THE PRINCE BUFFOON · SEPARATE PLAY TEST</p>
+  <h1>Two goblins.<br><span>One more adventure.</span></h1>
+  <p class="intro">Gobliins 2, the DOS floppy edition—on your phone.</p>
+  <p class="notice">Import your own game once, then play. Your files and saves stay in this browser. Goblins 3 is separate and unchanged.</p>
+  <section aria-labelledby="import-heading">
+    <h2 id="import-heading">1. Bring your floppy game</h2>
+    <p>This first test supports the English US v1.03 release. Use <strong>Gobliins_2_floppy_ready.zip</strong>, prepared from your two floppy images, or a folder containing the assembled game files. Raw .7z archives and disk images are not supported by this importer. CD support comes later.</p>
+    <div class="actions">
+      <label class="import-button secondary">Import game ZIP<input id="zip" type="file" accept=".zip,application/zip"></label>
+      <label class="import-button secondary">Import folder<input id="folder" type="file" webkitdirectory multiple></label>
+    </div>
+    <progress id="progress" max="100" value="0" hidden aria-label="Import progress"></progress>
+    <p id="library" role="status">Checking local game storage…</p>
+    <p id="status" aria-live="polite"></p>
+    <p id="error" role="alert"></p>
+    <div class="actions">
+      <button id="play" disabled>Play Gobliins 2</button>
+      <button id="continue" class="secondary" hidden>Return to game</button>
+    </div>
+  </section>
+  <section aria-labelledby="controls-heading">
+    <h2 id="controls-heading">2. Make yourself at home</h2>
+    <ul>
+      <li>On iPhone, use Safari → Share → Add to Home Screen, then rotate to landscape.</li>
+      <li>Drag to move the pointer; tap to click. Two-finger tap is the right mouse button. A mouse and keyboard work too.</li>
+      <li>Move the pointer to the top edge to reveal the game's menu. Save and load there; saves are separate from Goblins 3.</li>
+      <li>Tap Sound if audio needs waking up. The small Menu button returns here without restarting the game.</li>
+    </ul>
+    <p>Files are never sent to a server. Browser storage can still be cleared by the device or its settings; don't rely on private browsing to keep saves.</p>
+  </section>
+  <footer>Independent fan-made browser player, powered by ScummVM. No commercial game data is distributed. <a href="https://github.com/aenhsaihan/goblins2-web-test">Source &amp; licenses</a>.</footer>
+</main>
+<div id="game" hidden>
+  <iframe id="player" title="Gobliins 2 player" allow="autoplay; fullscreen" allowfullscreen></iframe>
+  <button id="menu" type="button">Menu</button>
+</div>
+<script type="module" src="./shell.js"></script>
+</body>
+</html>

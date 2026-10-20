@@ -1,0 +1,14 @@
+node_modules
+.DS_Store
+*.7z
+*.img
+*.STK
+*.stk
+*.ITK
+*.itk
+*.zip
+!docs/data/*.zip
+*.sav
+*.s00
+*.s01
+.openai/

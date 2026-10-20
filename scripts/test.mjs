@@ -45,6 +45,7 @@ test('game files and IDBFS HOME are isolated from Goblins 3',()=>{
   assert.match(shell,/--path=\/games\/gob2-floppy gob:gob2/);assert.match(shell,/--config=\/goblins2-web.ini/);
   assert.doesNotMatch(player,/goblins3|gob3|web_user|kuendig.io|blackbrush12|game-v5/);
   assert.deepEqual(JSON.parse(read('docs/data/index.json')).games,{});
+  assert.deepEqual(JSON.parse(read('docs/data/games/index.json')),{});
 });
 test('phone save-name keyboard invokes ScummVM virtual keyboard, not a fake overlay',()=>{
   const player=read('docs/player.html');

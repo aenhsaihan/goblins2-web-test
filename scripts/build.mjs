@@ -17,4 +17,7 @@ const indexPath=path.join(root,'docs/data/index.json');
 const index=JSON.parse(await readFile(indexPath,'utf8'));
 index.games={};
 await writeFile(indexPath,JSON.stringify(index,null,2)+'\n');
+// The runtime enumerates this directory even when its parent catalog is empty.
+await mkdir(path.join(root,'docs/data/games'),{recursive:true});
+await writeFile(path.join(root,'docs/data/games/index.json'),'{}\n');
 console.log('Static Gobliins 2 floppy test built in docs/.');

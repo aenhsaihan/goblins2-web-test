@@ -7,21 +7,27 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Gobliins 2">
-  <meta name="description" content="A separate, touch-friendly Gobliins 2 floppy player. Import your own game files locally; nothing is uploaded.">
+  <meta name="description" content="Play Gobliins 2 in your browser. Choose floppy or CD, with separate local game files and saves.">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="icon" href="./icon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./style.css">
-  <title>Gobliins 2 — Floppy test</title>
+  <link rel="stylesheet" href="./style.css?v=editions-1">
+  <title>Gobliins 2 — Floppy &amp; CD</title>
 </head>
 <body>
 <main>
-  <p class="eyebrow">THE PRINCE BUFFOON · SEPARATE PLAY TEST</p>
-  <h1>Two goblins.<br><span>One more adventure.</span></h1>
-  <p class="intro">Gobliins 2, the DOS floppy edition—on your phone.</p>
-  <p class="notice">Import your own game once, then play. Your files and saves stay in this browser. Goblins 3 is separate and unchanged.</p>
+  <p class="eyebrow">THE PRINCE BUFFOON · PLAY YOUR EDITION</p>
+  <h1>Two goblins.<br><span>Two ways to return.</span></h1>
+  <p class="intro">The floppy you remember. The CD soundtrack to discover.</p>
+  <p class="notice">Both editions keep their own game files and saves. Your existing floppy saves stay where they are. Goblins 3 is unchanged.</p>
+  <fieldset id="edition-picker" class="edition-picker">
+    <legend>Choose your edition</legend>
+    <label class="edition-option"><input type="radio" name="edition" value="floppy" checked><span><strong>Floppy</strong><small>The original DOS experience</small><small id="floppy-ready">Checking…</small></span></label>
+    <label class="edition-option"><input type="radio" name="edition" value="cd"><span><strong>CD</strong><small>The CD audio edition</small><small id="cd-ready">Checking…</small></span></label>
+  </fieldset>
   <section aria-labelledby="import-heading">
-    <h2 id="import-heading">1. Bring your floppy game</h2>
-    <p>This first test supports the English US v1.03 release. Use <strong>Gobliins_2_floppy_ready.zip</strong>, prepared from your two floppy images, or a folder containing the assembled game files. Raw .7z archives and disk images are not supported by this importer. CD support comes later.</p>
+    <h2 id="import-heading"><span id="edition-heading">Bring your floppy game</span></h2>
+    <p id="edition-description">English US · DOS floppy v1.03</p>
+    <p>Use your prepared <strong id="prepared-name">Gobliins_2_floppy_ready.zip</strong>, or its extracted folder. Original disc bundles, raw disk images and FLAC audio need preparation first. Importing replaces only the selected edition's game files—not its saves or the other edition.</p>
     <div class="actions">
       <label class="import-button secondary">Import game ZIP<input id="zip" type="file" accept=".zip,application/zip"></label>
       <label class="import-button secondary">Import folder<input id="folder" type="file" webkitdirectory multiple></label>
@@ -30,17 +36,20 @@
     <p id="library" role="status">Checking local game storage…</p>
     <p id="status" aria-live="polite"></p>
     <p id="error" role="alert"></p>
+    <p id="session-note" role="status"></p>
     <div class="actions">
-      <button id="play" disabled>Play Gobliins 2</button>
+      <button id="play" disabled>Play Floppy edition</button>
       <button id="continue" class="secondary" hidden>Return to game</button>
     </div>
+    <p id="cd-test-link" hidden>Already playing in the separate CD test app? <a href="https://aenhsaihan.github.io/goblins2-cd-test/">That address and its stored saves remain available.</a> If this browser asks for an import, do not clear your existing app's data.</p>
   </section>
   <section aria-labelledby="controls-heading">
     <h2 id="controls-heading">2. Make yourself at home</h2>
     <ul>
       <li>On iPhone, use Safari → Share → Add to Home Screen, then rotate to landscape.</li>
       <li>Drag to move the pointer; tap to click. Two-finger tap is the right mouse button. A mouse and keyboard work too.</li>
-      <li>Move the pointer to the top edge for the game's menu; the floppy-disk icon opens Save/Load. Use Keyboard when the game asks for a save name. Saves are separate from Goblins 3.</li>
+      <li>Move the pointer to the top edge for the game's menu; the floppy-disk icon opens Save/Load. Use Keyboard for a save name: type the name and Return, then tap the green check.</li>
+      <li>Use Menu to choose an edition. Selecting one does not close your running game; starting another asks you to confirm. Save before switching. Floppy and CD saves are kept separate, not converted between editions.</li>
       <li>Tap Sound if audio needs waking up. The small Menu button returns here without restarting the game.</li>
     </ul>
     <p>Files are never sent to a server. Browser storage can still be cleared by the device or its settings; don't rely on private browsing to keep saves.</p>
@@ -51,6 +60,6 @@
   <iframe id="player" title="Gobliins 2 player" allow="autoplay; fullscreen" allowfullscreen></iframe>
   <button id="menu" type="button">Menu</button>
 </div>
-<script type="module" src="./shell.js"></script>
+<script type="module" src="./shell.js?v=editions-1"></script>
 </body>
 </html>

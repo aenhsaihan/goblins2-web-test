@@ -5,11 +5,13 @@ import ts from 'typescript';
 const require=createRequire(import.meta.url);
 const root=path.resolve(import.meta.dirname,'..');
 await mkdir(path.join(root,'docs/vendor'),{recursive:true});
-for(const name of ['index.html','shell.js','style.css','player.html','manifest.webmanifest','icon.svg','scummvm.ini'])await copyFile(path.join(root,'src',name),path.join(root,'docs',name));
-const source=await readFile(path.join(root,'src/game-library.ts'),'utf8');
+for(const name of ['index.html','shell.js','editions.js','style.css','player.html','manifest.webmanifest','icon.svg','scummvm.ini','cd/player.html','cd/scummvm.ini'])await copyFile(path.join(root,'src',name),path.join(root,'docs',name));
+for(const library of ['game-library','cd-library']){
+const source=await readFile(path.join(root,`src/${library}.ts`),'utf8');
 const result=ts.transpileModule(source,{compilerOptions:{target:ts.ScriptTarget.ES2022,module:ts.ModuleKind.ES2022},reportDiagnostics:true});
 if(result.diagnostics?.length)throw Error(ts.formatDiagnosticsWithColorAndContext(result.diagnostics,{getCanonicalFileName:x=>x,getCurrentDirectory:()=>root,getNewLine:()=> '\n'}));
-await writeFile(path.join(root,'docs/game-library.js'),result.outputText.replace("from 'fflate'","from './vendor/fflate.js'"));
+await writeFile(path.join(root,`docs/${library}.js`),result.outputText.replace("from 'fflate'","from './vendor/fflate.js'"));
+}
 await copyFile(path.resolve(path.dirname(require.resolve('fflate')),'../esm/browser.js'),path.join(root,'docs/vendor/fflate.js'));
 await copyFile(path.resolve(path.dirname(require.resolve('fflate')),'../LICENSE'),path.join(root,'docs/vendor/fflate-LICENSE.txt'));
 await writeFile(path.join(root,'docs/.nojekyll'),'');
@@ -20,4 +22,4 @@ await writeFile(indexPath,JSON.stringify(index,null,2)+'\n');
 // The runtime enumerates this directory even when its parent catalog is empty.
 await mkdir(path.join(root,'docs/data/games'),{recursive:true});
 await writeFile(path.join(root,'docs/data/games/index.json'),'{}\n');
-console.log('Static Gobliins 2 floppy test built in docs/.');
+console.log('Gobliins 2 floppy/CD selector built in docs/. Both players remain unchanged.');

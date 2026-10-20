@@ -39,10 +39,10 @@ test('virtual data requests use the project subpath, not the account root',async
   const p=load();await p.window.fetch('/data/index.json');assert.equal(p.fetches[0].input,'https://example.github.io/goblins2-web-test/data/index.json');
 });
 test('game files and IDBFS HOME are isolated from Goblins 3',()=>{
-  const player=read('docs/player.html'),library=read('docs/game-library.js'),shell=read('docs/shell.js');
+  const player=read('docs/player.html'),library=read('docs/game-library.js'),editions=read('docs/editions.js');
   assert.match(library,/goblins2-floppy-library/);assert.match(player,/indexedDB.open\('goblins2-floppy-library'/);
   assert.match(player,/ENV.HOME = '\/home\/goblins2-floppy'/);assert.match(player,/savepath=\/home\/goblins2-floppy/);
-  assert.match(shell,/--path=\/games\/gob2-floppy gob:gob2/);assert.match(shell,/--config=\/goblins2-web.ini/);
+  assert.match(editions,/gamePath:'\/games\/gob2-floppy'/);assert.match(editions,/config:'\/goblins2-web.ini'/);
   assert.doesNotMatch(player,/goblins3|gob3|web_user|kuendig.io|blackbrush12|game-v5/);
   assert.deepEqual(JSON.parse(read('docs/data/index.json')).games,{});
   assert.deepEqual(JSON.parse(read('docs/data/games/index.json')),{});
@@ -56,7 +56,7 @@ test('phone save-name keyboard invokes ScummVM virtual keyboard, not a fake over
 });
 test('published tree contains no game archives, images or supplied prepared ZIP',()=>{
   const files=readdirSync(new URL('docs/',root),{recursive:true}).filter(x=>typeof x==='string');
-  assert.equal(files.some(x=>/\.(stk|itk|img|7z|s\d\d)$/i.test(x)),false);
-  assert.equal(files.some(x=>/floppy_ready\.zip/i.test(x)),false);
-  assert.equal(files.some(x=>/\.zip$/i.test(x)&&!x.startsWith('data/')),false);
+  assert.equal(files.some(x=>/\.(stk|itk|img|7z|bin|cue|ogg|flac|lic|s\d\d)$/i.test(x)),false);
+  assert.equal(files.some(x=>/ready\.zip/i.test(x)),false);
+  assert.equal(files.some(x=>/\.zip$/i.test(x)&&!x.startsWith('data/')&&!x.startsWith('cd/data/')),false);
 });

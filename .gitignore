@@ -8,7 +8,15 @@ node_modules
 *.itk
 *.zip
 !docs/data/*.zip
+!docs/cd/data/*.zip
 *.sav
 *.s00
 *.s01
 .openai/
+*.bin
+*.BIN
+*.cue
+*.flac
+*.ogg
+*.lic
+*.LIC

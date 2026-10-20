@@ -46,6 +46,13 @@ test('game files and IDBFS HOME are isolated from Goblins 3',()=>{
   assert.doesNotMatch(player,/goblins3|gob3|web_user|kuendig.io|blackbrush12|game-v5/);
   assert.deepEqual(JSON.parse(read('docs/data/index.json')).games,{});
 });
+test('phone save-name keyboard invokes ScummVM virtual keyboard, not a fake overlay',()=>{
+  const player=read('docs/player.html');
+  assert.match(player,/id="keyboard"/);
+  assert.match(player,/key\('keydown', 'Control', 'ControlLeft', 17, true\)/);
+  assert.match(player,/key\('keydown', 'F7', 'F7', 118, true\)/);
+  assert.match(player,/key\('keyup', 'Control', 'ControlLeft', 17, false\)/);
+});
 test('published tree contains no game archives, images or supplied prepared ZIP',()=>{
   const files=readdirSync(new URL('docs/',root),{recursive:true}).filter(x=>typeof x==='string');
   assert.equal(files.some(x=>/\.(stk|itk|img|7z|s\d\d)$/i.test(x)),false);

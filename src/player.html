@@ -74,6 +74,7 @@
       @media (orientation: portrait) and (max-width: 720px) { #rotate-tip { display: block; } }
       @media (orientation: landscape) and (max-height: 760px) {
         body.ready #pan-controls { display: block; }
+        #controls { top: max(.45rem, env(safe-area-inset-top)); bottom: auto; }
         canvas {
           left: max(.4rem, env(safe-area-inset-left));
           right: max(.4rem, env(safe-area-inset-right));
@@ -111,6 +112,7 @@
       <button class="pan-control" id="pan-right" type="button" aria-label="Tap to pan camera right">›</button>
     </div>
     <div id="controls" aria-label="Game controls">
+      <button class="control" id="keyboard" type="button">Keyboard</button>
       <button class="control" id="sound" type="button">Sound</button>
       <button class="control" id="fullscreen" type="button">Full screen</button>
     </div>
@@ -160,7 +162,7 @@ onscreen_control=false
 
         // SDL3's WebAssembly backend mixes sound inside a deprecated
         // ScriptProcessor callback on the browser's main thread. A demanding
-        // Gobliins 2 cutscene can delay that callback long enough for iOS to
+        // game cutscene can delay that callback long enough for iOS to
         // underrun and emit crackling or silence. For the opt-in iOS pipeline,
         // replace only playback ScriptProcessors with a small ahead-of-time
         // queue of native AudioBufferSource nodes. ScummVM still performs all
@@ -622,6 +624,20 @@ onscreen_control=false
         });
 
         document.getElementById('sound').addEventListener('click', unlockAudio);
+        document.getElementById('keyboard').addEventListener('click', () => {
+          unlockAudio();
+          // ScummVM's own virtual keyboard (Ctrl+F7) works inside its canvas,
+          // including the original floppy game's filename-entry dialog.
+          const key = (type, value, code, keyCode, ctrlKey) => canvas.dispatchEvent(new KeyboardEvent(type, {
+            key: value, code, keyCode, which: keyCode, ctrlKey, bubbles: true, cancelable: true,
+          }));
+          key('keydown', 'Control', 'ControlLeft', 17, true);
+          key('keydown', 'F7', 'F7', 118, true);
+          setTimeout(() => {
+            key('keyup', 'F7', 'F7', 118, true);
+            key('keyup', 'Control', 'ControlLeft', 17, false);
+          }, 120);
+        });
         const fullscreenButton = document.getElementById('fullscreen');
         fullscreenButton.addEventListener('click', async () => {
           if (window.parent !== window) {

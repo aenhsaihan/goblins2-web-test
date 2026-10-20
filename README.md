@@ -11,7 +11,7 @@ With Node 22 or newer: `npm install`, `npm run build`, `npm test`, then `npm run
 ## Controls and storage
 
 - Drag to move the pointer; tap to left-click; two-finger tap to right-click. Uses ScummVM's native mouse touch mode, not a gamepad.
-- Move the pointer to the top edge for the game menu and saves. Mouse/keyboard are also supported.
+- Move the pointer to the top edge, then use the floppy-disk icon for Save/Load. The Keyboard button opens ScummVM's virtual keyboard for save names. Mouse/keyboard are also supported.
 - Safari Add to Home Screen + landscape is the recommended iPhone display mode. Tap Sound to resume audio after an interruption.
 - Local game database: `goblins2-floppy-library`. ScummVM HOME and IDBFS save mount: `/home/goblins2-floppy`. Both are isolated from the Goblins 3 player, including on the shared GitHub Pages origin.
 - No service worker is installed. Offline startup is not guaranteed. Browser storage can be evicted; private browsing is not persistent.
